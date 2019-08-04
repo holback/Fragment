@@ -27,13 +27,11 @@ public class ListFragment extends androidx.fragment.app.ListFragment
 
     public interface ItemSelected
     {
-
         void onItemSelected(int index);
-
     }
 
 
-    public ListFragment()
+    public ListFragment ()
     {
         // Required empty public constructor
     }
@@ -65,6 +63,7 @@ public class ListFragment extends androidx.fragment.app.ListFragment
 
         //
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,data));
+        activity.onItemSelected(0);
 
     }
 
@@ -73,6 +72,7 @@ public class ListFragment extends androidx.fragment.app.ListFragment
     public void onListItemClick(ListView l, View v, int position, long id)
     {
 
+        activity.onItemSelected(position);
 
 
     }
