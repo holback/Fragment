@@ -1,6 +1,7 @@
 package com.example.fragments;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements ListFragment.ItemSelected {
 
     TextView tvDescription;
-    ArrayList<String> description;
+    String[] description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,20 +20,39 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Item
 
 
         tvDescription = findViewById(R.id.tvDescription);
-        description = new ArrayList<String>();
-        description.add("Description 1!");
-        description.add("Description 2!");
-        description.add("Description 3!");
+        description = getResources().getStringArray(R.array.descriptions);
 
+        //phone in portrait mode
+        if (findViewById(R.id.layout_portrait) != null) {
+            FragmentManager manager = this.getSupportFragmentManager();
+            manager.beginTransaction()
+                    .hide(manager.findFragmentById(R.id.detailFragment))
+                    .show(manager.findFragmentById(R.id.listFragment))
+                    .commit();
+        }
 
-
+        //phone in landscape mode
+        if (findViewById(R.id.layout_land) != null) {
+            FragmentManager manager = this.getSupportFragmentManager();
+            manager.beginTransaction()
+                    .show(manager.findFragmentById(R.id.listFragment))
+                    .show(manager.findFragmentById(R.id.detailFragment))
+                    .commit();
+        }
     }
 
     @Override
-    public void onItemSelected(int index)
-    {
+    public void onItemSelected(int index) {
 
-        tvDescription.setText(description.get(index));
-
+        tvDescription.setText(description[index]);
+        if (findViewById(R.id.layout_portrait) != null)
+        {
+            FragmentManager manager = this.getSupportFragmentManager();
+            manager.beginTransaction()
+                    .show(manager.findFragmentById(R.id.detailFragment))
+                    .hide(manager.findFragmentById(R.id.listFragment))
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }

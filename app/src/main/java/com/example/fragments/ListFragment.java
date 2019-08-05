@@ -54,15 +54,14 @@ public class ListFragment extends androidx.fragment.app.ListFragment
         super.onActivityCreated(savedInstanceState);
 
         //dichiariamo la lista "data"
-        ArrayList<String> data = new ArrayList<String>();
+        String [] data;
+        data = getResources().getStringArray(R.array.pieces);
 
-        //aggiungiamo tre item alla lista
-        data.add("1. Item #1");
-        data.add("2. Item #2");
-        data.add("3. Item #3");
+
 
         //
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,data));
+        if(this.getActivity().findViewById((R.id.layout_land)) != null)
         activity.onItemSelected(0);
 
     }
